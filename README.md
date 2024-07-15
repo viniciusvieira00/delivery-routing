@@ -74,8 +74,8 @@ Aqui estão os usuários que você pode utilizar para testar a aplicação:
 - `data.ts`: Simulação dos dados de usuários e postagens.
 - `dijkstra.ts`: Implementação do algoritmo de Dijkstra para recomendação de postagens.
 
-## Contribuidores
+## Contribuidores do Projeto
 
-- [Vinicius Vieira](https://github.com/viniciusvieira00)
-- [Luciano Machado](https://github.com/viniciusvieira00)
+- [Vinicius Vieira](https://github.com/viniciusvieira00), Matrícula: 190118059
+- [Luciano Machado](https://github.com/Hierophylax), Matrícula: 000000000
 
