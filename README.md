@@ -24,7 +24,7 @@ O algoritmo de Dijkstra é utilizado para encontrar as postagens mais relevantes
 
 ### Pré-requisitos
 
-- Node.js na versão mais atual 22.4.1 instalado
+- Node.js na versão mais atual (22.4.1) instalado
 - npm ou yarn instalado
 
 ### Passos para Executar
@@ -55,6 +55,11 @@ O algoritmo de Dijkstra é utilizado para encontrar as postagens mais relevantes
 
 4. Abra [http://localhost:3000](http://localhost:3000) no seu navegador para ver a aplicação.
 
+### Link de Deploy
+
+Você também pode acessar a aplicação diretamente no link de deploy:
+[post-recommendation-pa.vercel.app](https://post-recommendation-pa.vercel.app/login)
+
 ### Usuários Disponíveis para Teste
 
 Aqui estão os usuários que você pode utilizar para testar a aplicação:
@@ -78,4 +83,3 @@ Aqui estão os usuários que você pode utilizar para testar a aplicação:
 
 - [Vinicius Vieira](https://github.com/viniciusvieira00), Matrícula: 190118059
 - [Luciano Machado](https://github.com/Hierophylax), Matrícula: 000000000
-
