@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Projeto de Recomendação de Postagens
 
-## Getting Started
+Este projeto é uma aplicação de recomendação de postagens desenvolvida utilizando Next.js, TypeScript e MaterialUI. A aplicação simula uma rede social onde os usuários podem se autenticar e receber recomendações de postagens com base em seus interesses. O algoritmo de Dijkstra é utilizado para calcular as postagens mais relevantes para cada usuário.
 
-First, run the development server:
+## Funcionalidades
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Autenticação de usuário com nome de usuário e senha
+- Exibição do nome do usuário logado e seus interesses
+- Recomendação de postagens baseadas nos interesses do usuário
+- Interface moderna e intuitiva semelhante às redes sociais
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Algoritmo de Dijkstra para Recomendação de Postagens
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+O algoritmo de Dijkstra é utilizado para encontrar as postagens mais relevantes para o usuário logado. A relevância é determinada com base nos interesses do usuário e nas tags associadas a cada postagem. O algoritmo calcula o "caminho" mais curto entre os interesses do usuário e as postagens disponíveis, recomendando aquelas que têm maior afinidade com os interesses do usuário.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Funcionamento do Algoritmo
 
-## Learn More
+1. **Construção do Grafo**: Cada postagem é representada como um nó no grafo. As conexões entre os nós (arestas) são ponderadas com base na similaridade entre as tags das postagens.
+2. **Inicialização**: As distâncias de todas as postagens são inicializadas como infinitas, exceto as postagens que têm tags correspondentes aos interesses do usuário, que são inicializadas com distância zero.
+3. **Execução do Algoritmo**: O algoritmo de Dijkstra é executado para encontrar o caminho mais curto (ou a menor distância) entre os interesses do usuário e as postagens.
+4. **Recomendação**: As postagens que têm a menor distância calculada são recomendadas ao usuário.
 
-To learn more about Next.js, take a look at the following resources:
+## Como Executar o Projeto
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Pré-requisitos
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- Node.js na versão mais atual 22.4.1 instalado
+- npm ou yarn instalado
 
-## Deploy on Vercel
+### Passos para Executar
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/viniciusvieira00/post-recommendation
+   cd post-recommendation
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+2. Instale as dependências:
+   ```bash
+   npm install
+   ```
+   ou
+   ```bash
+   yarn install
+   ```
+
+3. Inicie o servidor de desenvolvimento:
+   ```bash
+   npm run dev
+   ```
+   ou
+   ```bash
+   yarn dev
+   ```
+
+4. Abra [http://localhost:3000](http://localhost:3000) no seu navegador para ver a aplicação.
+
+### Usuários Disponíveis para Teste
+
+Aqui estão os usuários que você pode utilizar para testar a aplicação:
+
+| Nome     | Nome de Usuário | Senha        | Interesses               |
+|----------|-----------------|--------------|--------------------------|
+| Alice    | alice           | password123  | tech, music, art         |
+| Bob      | bob             | password123  | tech, sports, travel     |
+| Charlie  | charlie         | password123  | music, travel, food      |
+| David    | david           | password123  | sports, art, tech        |
+| Eve      | eve             | password123  | food, art, tech          |
+
+## Estrutura do Projeto
+
+- `pages/index.tsx`: Página principal que exibe as recomendações de postagens.
+- `pages/login.tsx`: Página de login para autenticação do usuário.
+- `data.ts`: Simulação dos dados de usuários e postagens.
+- `dijkstra.ts`: Implementação do algoritmo de Dijkstra para recomendação de postagens.
+
+## Contribuidores
+
+- [Vinicius Vieira](https://github.com/viniciusvieira00)
+- [Luciano Machado](https://github.com/viniciusvieira00)
+
