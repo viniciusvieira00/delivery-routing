@@ -1,10 +1,8 @@
-'use client';
-
-import HomeView from "@/sections/home-view";
-import { Container, Typography } from "@mui/material";
+import Login from "@/sections/login-view";
+import { Container } from "@mui/material";
 
 
-export default function Home() {
+export default function LoginPage() {
   return (
     <Container sx={{
       display: "flex",
@@ -12,7 +10,7 @@ export default function Home() {
       justifyContent: "center",
       alignItems: "center",
     }}>
-      <HomeView />
+      <Login />
 
     </Container>
   );

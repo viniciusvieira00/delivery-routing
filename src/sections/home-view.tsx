@@ -1,77 +1,129 @@
 'use client';
 
-import { useState } from 'react';
-import Map from '../components/Map';
-import { Box, Button, FormControl, Input, InputLabel, Typography } from '@mui/material';
-import { LatLngLiteral } from '../utils/grafos';
+import React, { useState, useEffect } from 'react';
+import { Container, Typography, List, ListItem, ListItemText, Button, AppBar, Toolbar, Box, Dialog, DialogActions, DialogContent } from '@mui/material';
+import { users, posts, User, Post } from '../utils/data';
+import { dijkstra } from '../utils/djikstra';
 import { useRouter } from 'next/navigation';
+import Label from '@/components/label';
 
-const geocode = async (address: string, apiKey: string): Promise<LatLngLiteral | null> => {
-  const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`);
-  const data = await response.json();
-  if (data.results.length > 0) {
-    return data.results[0].geometry.location;
+const Home: React.FC = () => {
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [post, setPost] = useState<Post | null>(null);
+  const [loggedUser, setLoggedUser] = useState<User | null>(null);
+  const [recommendations, setRecommendations] = useState<Post[]>([]);
+
+  useEffect(() => {
+    const loggedUserData = sessionStorage.getItem('loggedUser');
+    if (loggedUserData) {
+      const user: User = JSON.parse(loggedUserData);
+      setLoggedUser(user);
+      const recommendedPosts = dijkstra(user, posts);
+      setRecommendations(recommendedPosts);
+    } else {
+      router.push('/login');
+    }
+  }, []);
+
+  if (!loggedUser) {
+    return null;
   }
-  return null;
-};
 
-const HomeView: React.FC = () => {
-  const [origin, setOrigin] = useState<string>('');
-  const [destination, setDestination] = useState<string>('');
-  const [originCoords, setOriginCoords] = useState<LatLngLiteral | null>(null);
-  const [destinationCoords, setDestinationCoords] = useState<LatLngLiteral | null>(null);
-  const route = useRouter();
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY as string;
-    const originLocation = await geocode(origin, apiKey);
-    const destinationLocation = await geocode(destination, apiKey);
-    setOriginCoords(originLocation);
-    setDestinationCoords(destinationLocation);
-    console.log(originLocation, destinationLocation);
-  };
-
-  return (
-    <Box>
-      <Typography variant='h1'>Delivery Routing</Typography>
-      <form style={{
+  const renderPostDialog = (
+    post !== null && (
+      <Dialog open={open} onClose={() => setOpen(false)} sx={{
         display: 'flex',
         flexDirection: 'column',
-        gap: '10px',
-        width: '100%',
-        margin: '20px 0',
-      }} onSubmit={handleSubmit}>
-        <FormControl>
-          <InputLabel>Origem:</InputLabel>
-          <Input
-            type="text"
-            value={origin}
-            onChange={(e) => setOrigin(e.target.value)}
-          />
-        </FormControl>
-        <FormControl>
-          <InputLabel>Destino:</InputLabel>
-          <Input
-            type="text"
-            value={destination}
-            onChange={(e) => setDestination(e.target.value)}
-          />
-        </FormControl>
-        <Button variant='contained' type="submit">Calcular Rota</Button>
-      </form>
-      <Map reset={
-        () => {
-          setOrigin('');
-          setDestination('');
-          setOriginCoords(null);
-          setDestinationCoords(null);
-          route.push('/#');
-        }
-      
-      } origin={originCoords} destination={destinationCoords} />
-    </Box>
+        alignItems: 'center',
+        padding: 2,
+      }}>
+        <DialogContent sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 2,
+        }}>
+          <Typography variant="h5">{post.title}</Typography>
+          <Typography variant="body1">{post.content}</Typography>
+          <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 1,
+          }}>
+            <Typography variant='body2'
+            >Tags: {
+                post.tags.map((tag) => (
+                  <Label>{tag}</Label>
+                ))
+              }</Typography>
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button variant='contained' color='error' onClick={() => setOpen(false)}>Close</Button>
+        </DialogActions>
+      </Dialog>
+    )
+  );
+
+  return (
+    <Container>
+      <AppBar position="static">
+        <Toolbar sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}>
+          <Typography variant="h6">
+            Welcome, {loggedUser.name}
+          </Typography>
+
+          <Button color="warning" variant='contained' onClick={() => {
+            sessionStorage.removeItem('loggedUser');
+            router.push('/login');
+          }}>
+            Logout
+          </Button>
+        </Toolbar>
+      </AppBar>
+      <Box mt={2} sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: 2,
+      }}>
+        <Typography variant="h5">Your Interests: {loggedUser.interests.join(', ')}</Typography>
+        <Typography variant="h6" gutterBottom>
+          Recommended Posts for You:
+        </Typography>
+        <List sx={{
+          width: '100%',
+          maxWidth: 800,
+          bgcolor: 'background.paper',
+          borderRadius: 4,
+          boxShadow: 4,
+        }}>
+          {recommendations.map((post) => (
+            <Box
+              onClick={() => {
+                setPost(post);
+                setOpen(true);
+              }}
+              sx={{
+                '&:hover': {
+                  bgcolor: 'primary.light',
+                  cursor: 'pointer',
+                }
+              }}>
+              <ListItem key={post.id}>
+                <ListItemText primary={post.title} secondary={post.content} />
+                <Label>{post.tags.join(', ')}</Label>
+              </ListItem>
+            </Box>
+          ))}
+        </List>
+      </Box>
+      {renderPostDialog}
+    </Container>
   );
 };
 
-export default HomeView;
+export default Home;
