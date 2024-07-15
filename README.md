@@ -71,8 +71,8 @@ Aqui estão os usuários que você pode utilizar para testar a aplicação:
 
 - `pages/index.tsx`: Página principal que exibe as recomendações de postagens.
 - `pages/login.tsx`: Página de login para autenticação do usuário.
-- `data.ts`: Simulação dos dados de usuários e postagens.
-- `dijkstra.ts`: Implementação do algoritmo de Dijkstra para recomendação de postagens.
+- `utils/data.ts`: Simulação dos dados de usuários e postagens.
+- `utils/dijkstra.ts`: Implementação do algoritmo de Dijkstra para recomendação de postagens.
 
 ## Contribuidores do Projeto
 
