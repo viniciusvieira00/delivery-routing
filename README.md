@@ -82,4 +82,4 @@ Aqui estão os usuários que você pode utilizar para testar a aplicação:
 ## Contribuidores do Projeto
 
 - [Vinicius Vieira](https://github.com/viniciusvieira00), Matrícula: 190118059
-- [Luciano Machado](https://github.com/Hierophylax), Matrícula: 000000000
+- [Luciano Machado](https://github.com/Hierophylax), Matrícula: 180126130
