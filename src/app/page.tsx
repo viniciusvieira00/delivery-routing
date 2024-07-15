@@ -1,9 +1,17 @@
+import HomeView from "@/sections/home-view";
+import { Container, Typography } from "@mui/material";
 
 
 export default function Home() {
   return (
-    <div>
-      <h1>Home</h1>
-    </div>
+    <Container sx={{
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+    }}>
+      <HomeView />
+
+    </Container>
   );
 }
