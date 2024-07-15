@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Typography, List, ListItem, ListItemText, Button, AppBar, Toolbar, Box, Dialog, DialogActions, DialogContent } from '@mui/material';
 import { users, posts, User, Post } from '../utils/data';
-import { dijkstra } from '../utils/djikstra';
+import { dijkstra } from '../utils/dijkstra';
 import { useRouter } from 'next/navigation';
 import Label from '@/components/label';
 
